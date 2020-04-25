@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/pesoFragment">
+    <fragment
+        android:id="@+id/pesoFragment"
+        tools:layout="@layout/fragment_peso"
+        android:name="com.example.fragments.fragments.PesoFragment"
+        android:label="PesoFragment" >
+        <action
+            android:id="@+id/action_pesoFragment_to_calculoPesoFragment"
+            app:destination="@id/calculoPesoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/calculoPesoFragment"
+        tools:layout="@layout/fragment_calculopeso"
+        android:name="com.example.fragments.fragments.CalculoPesoFragment"
+        android:label="CalculoPesoFragment" >
+        <argument
+            android:name="pesoTierra"
+            app:argType="string" />
+    </fragment>
+</navigation>
