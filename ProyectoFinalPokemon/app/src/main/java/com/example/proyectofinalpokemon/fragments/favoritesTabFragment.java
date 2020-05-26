@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.LinearLayout;
 
 import com.example.proyectofinalpokemon.R;
 import com.example.proyectofinalpokemon.adapters.PokemonAdapter;
+import com.example.proyectofinalpokemon.listener.OnPokemonClicked;
 import com.example.proyectofinalpokemon.models.Pokemon;
 
 import java.util.ArrayList;
@@ -24,10 +26,10 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class favoritesTabFragment extends Fragment {
+public class favoritesTabFragment extends Fragment implements OnPokemonClicked {
 
     private RecyclerView recyclerView;
-    private PokemonAdapter pokemonAdapter = new PokemonAdapter();
+    private PokemonAdapter pokemonAdapter = new PokemonAdapter(this);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,8 +49,8 @@ public class favoritesTabFragment extends Fragment {
 
     private void InitRecyclerView(){
         recyclerView.setAdapter(pokemonAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
         fillMockData();
     }
 
@@ -58,15 +60,14 @@ public class favoritesTabFragment extends Fragment {
         Pokemon pokemon = new Pokemon("", "Pikachu", "Pokemon del Rayo", true);
         pokemonList.add(pokemon);
 
-        pokemon = new Pokemon("", "Pikachu", "Pokemon del Rayo", true);
-        pokemonList.add(pokemon);
-
         pokemon = new Pokemon("", "Sharmander", "Pokemon de Fuego", false);
         pokemonList.add(pokemon);
 
-        pokemon = new Pokemon("", "Giglipop", "Pokemon globo", true);
-        pokemonList.add(pokemon);
-
         pokemonAdapter.setPokemonList(pokemonList);
+    }
+
+    @Override
+    public void onClicked(Pokemon pokemon) {
+        Log.d("Item clicked: ", pokemon.getPokemonName());
     }
 }

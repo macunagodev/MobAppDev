@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyectofinalpokemon.R;
+import com.example.proyectofinalpokemon.listener.OnPokemonClicked;
 import com.example.proyectofinalpokemon.models.Pokemon;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,11 @@ import java.util.List;
 public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder>{
 
     private List<Pokemon> pokemonList = new ArrayList<>();
+    private OnPokemonClicked pokemonListener;
+
+    public PokemonAdapter(OnPokemonClicked pokemonListener) {
+        this.pokemonListener = pokemonListener;
+    }
 
     public void setPokemonList(List<Pokemon> pokemonList) {
         this.pokemonList = pokemonList;
@@ -30,7 +36,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
 
     @Override
     public void onBindViewHolder(@NonNull PokemonViewHolder holder, int position) {
-        holder.Bind(pokemonList.get(position));
+        holder.Bind(pokemonList.get(position), pokemonListener);
     }
 
     @Override
@@ -54,9 +60,15 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
             favoriteImg = itemView.findViewById(R.id.imgFavorite);
         }
 
-        public void Bind(Pokemon pokemon){
+        public void Bind(final Pokemon pokemon, final OnPokemonClicked listener){
             pokemonNameTextView.setText(pokemon.getPokemonName());
             pokemonDescriptionTextView.setText(pokemon.getPokemonDescription());
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onClicked(pokemon);
+                }
+            });
         }
     }
 }
