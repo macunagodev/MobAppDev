@@ -9,8 +9,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 public class PageAdapter extends FragmentStateAdapter {
 
-    public PageAdapter(@NonNull FragmentActivity fragmentActivity) {
-        super(fragmentActivity);
+    public PageAdapter(@NonNull Fragment fragment) {
+        super(fragment);
     }
 
     @NonNull
@@ -22,7 +22,7 @@ public class PageAdapter extends FragmentStateAdapter {
                 return new favoritesTabFragment();
             case 1:
                 return new recentsTabFragment();
-            case 3:
+            case 2:
                 return new allTabFragment();
             default:
                 return null;
