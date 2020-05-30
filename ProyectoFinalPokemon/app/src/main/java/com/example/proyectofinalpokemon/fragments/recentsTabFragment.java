@@ -57,7 +57,7 @@ public class recentsTabFragment extends Fragment implements OnPokemonClicked {
     private void fillMockData(){
         List<Pokemon> pokemonList = new ArrayList<>();
 
-        Pokemon pokemon = new Pokemon("", "Sharmander", "Pokemon de Fuego", false);
+        Pokemon pokemon = new Pokemon("", "Sharmander", "Pokemon de Fuego", false, "");
         pokemonList.add(pokemon);
 
         pokemonAdapter.setPokemonList(pokemonList);

@@ -57,10 +57,10 @@ public class favoritesTabFragment extends Fragment implements OnPokemonClicked {
     // Metodo que simula llamada al servidor.
     private void fillMockData(){
         List<Pokemon> pokemonList = new ArrayList<>();
-        Pokemon pokemon = new Pokemon("", "Pikachu", "Pokemon del Rayo", true);
+        Pokemon pokemon = new Pokemon("", "Pikachu", "Pokemon del Rayo", true, "");
         pokemonList.add(pokemon);
 
-        pokemon = new Pokemon("", "Sharmander", "Pokemon de Fuego", false);
+        pokemon = new Pokemon("", "Sharmander", "Pokemon de Fuego", false, "");
         pokemonList.add(pokemon);
 
         pokemonAdapter.setPokemonList(pokemonList);
