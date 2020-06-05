@@ -32,6 +32,7 @@
         android:hint="@string/entrenador">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/trainerNameTextInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
              />
@@ -47,23 +48,31 @@
         app:layout_constraintStart_toStartOf="@+id/txtEntrenador"
         app:layout_constraintTop_toBottomOf="@+id/txtEntrenador" />
 
-    <RadioButton
-        android:id="@+id/rbMasculino"
-        android:layout_width="wrap_content"
+    <RadioGroup
+        android:id="@+id/rbgSexo"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="@string/sexo_masculino"
-        app:layout_constraintStart_toStartOf="@+id/txtSexo"
-        app:layout_constraintTop_toBottomOf="@+id/txtSexo" />
-
-    <RadioButton
-        android:id="@+id/rbFemenino"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/sexo_femenino"
         app:layout_constraintEnd_toEndOf="@+id/txtSexo"
-        app:layout_constraintTop_toBottomOf="@+id/txtSexo" />
+        app:layout_constraintStart_toStartOf="@+id/txtSexo"
+        app:layout_constraintTop_toBottomOf="@+id/txtSexo">
+
+        <RadioButton
+            android:id="@+id/rbMasculino"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/sexo_masculino"
+            />
+
+        <RadioButton
+            android:id="@+id/rbFemenino"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/sexo_femenino"
+            />
+    </RadioGroup>
 
     <Button
         android:id="@+id/btnSubmit"
@@ -71,10 +80,10 @@
         android:layout_height="wrap_content"
         android:text="@string/submit_text"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/rbFemenino"
+        app:layout_constraintEnd_toEndOf="@+id/rbgSexo"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/rbMasculino"
-        app:layout_constraintTop_toBottomOf="@+id/rbMasculino"
+        app:layout_constraintStart_toStartOf="@+id/rbgSexo"
+        app:layout_constraintTop_toBottomOf="@+id/rbgSexo"
         app:layout_constraintVertical_bias="0.81" />
 
 
