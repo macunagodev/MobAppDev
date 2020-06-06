@@ -8,7 +8,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/pokemonImageView"
         android:layout_width="266dp"
         android:layout_height="168dp"
         android:layout_marginTop="32dp"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/pokemonNameTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -26,20 +26,36 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
-        android:text="TextView"
+        tools:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/cardview_dark_background"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/pokemonImageView"
+        android:gravity="center_horizontal" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/abilityDescriptionTextView"
+        android:textStyle="bold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="@string/pokemon_abilities"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        app:layout_constraintEnd_toEndOf="@+id/pokemonNameTextView"
+        app:layout_constraintStart_toStartOf="@+id/pokemonNameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/pokemonNameTextView" />
+
+    <TextView
+        android:id="@+id/pokemonAbilitiesTextView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="32dp"
         android:layout_marginBottom="32dp"
-        android:text="TextView"
+        tools:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintEnd_toEndOf="@+id/abilityDescriptionTextView"
+        app:layout_constraintStart_toStartOf="@+id/abilityDescriptionTextView"
+        app:layout_constraintTop_toBottomOf="@+id/abilityDescriptionTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

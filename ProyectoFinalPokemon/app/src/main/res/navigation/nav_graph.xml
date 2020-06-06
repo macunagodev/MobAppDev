@@ -31,5 +31,15 @@
         android:id="@+id/detailFragment"
         android:name="com.example.proyectofinalpokemon.fragments.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="pokeId"
+            app:argType="string" />
+        <argument
+            android:name="pokeImg"
+            app:argType="string" />
+        <argument
+            android:name="pokeName"
+            app:argType="string" />
+    </fragment>
 </navigation>

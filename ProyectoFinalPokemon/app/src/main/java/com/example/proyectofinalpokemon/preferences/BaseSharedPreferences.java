@@ -22,4 +22,14 @@ public class BaseSharedPreferences {
     public String getTrainerName(){
         return sharedPref.getString(Constants.NAME_KEY, null);
     }
+
+    public void setGender(String gender){
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(Constants.GENDER_KEY, gender);
+        editor.apply();
+    }
+
+    public String getGender(){
+        return sharedPref.getString(Constants.GENDER_KEY, null);
+    }
 }

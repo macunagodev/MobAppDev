@@ -59,10 +59,10 @@ public class favoritesTabFragment extends Fragment implements OnPokemonClicked {
     // Metodo que simula llamada al servidor.
     private void fillMockData(){
         List<Pokemon> pokemonList = new ArrayList<>();
-        Pokemon pokemon = new Pokemon("", "Pikachu", "Pokemon del Rayo", true, "");
+        Pokemon pokemon = new Pokemon("", "Pikachu", "Pokemon del Rayo", true, "", "");
         pokemonList.add(pokemon);
 
-        pokemon = new Pokemon("", "Sharmander", "Pokemon de Fuego", false, "");
+        pokemon = new Pokemon("", "Sharmander", "Pokemon de Fuego", false, "", "");
         pokemonList.add(pokemon);
 
         pokemonAdapter.setPokemonList(pokemonList);
@@ -71,7 +71,12 @@ public class favoritesTabFragment extends Fragment implements OnPokemonClicked {
     @Override
     public void onClicked(Pokemon pokemon) {
         Log.d("Item clicked: ", pokemon.getPokemonName());
-        NavDirections action = MenuFragmentDirections.actionMenuFragmentToDetailFragment();
+        NavDirections action = MenuFragmentDirections.actionMenuFragmentToDetailFragment("1", "https://pokeres.bastionbot.org/images/pokemon/25.png", "Pending");
         NavHostFragment.findNavController(favoritesTabFragment.this).navigate(action);
+    }
+
+    @Override
+    public void onFavoriteClick(Pokemon pokemon) {
+
     }
 }

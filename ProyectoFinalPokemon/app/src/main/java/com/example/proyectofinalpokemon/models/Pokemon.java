@@ -10,17 +10,23 @@ public class Pokemon {
     private Boolean isFavorite;
     @SerializedName("url")
     private String pokemonUrl;
+    private String pokemonId;
 
-    public Pokemon(String pokemonImage, String pokemonName, String pokemonDescription, Boolean isFavorite, String pokemonUrl) {
+    public Pokemon(String pokemonImage, String pokemonName, String pokemonDescription, Boolean isFavorite, String pokemonUrl, String pokemonId) {
         this.pokemonImage = pokemonImage;
         this.pokemonName = pokemonName;
         this.pokemonDescription = pokemonDescription;
         this.isFavorite = isFavorite;
         this.pokemonUrl = pokemonUrl;
+        this.pokemonId = pokemonId;
     }
 
     public String getPokemonImage() {
         return pokemonImage;
+    }
+
+    public void setPokemonImage(String pokemonImage) {
+        this.pokemonImage = pokemonImage;
     }
 
     public String getPokemonName() {
@@ -37,5 +43,13 @@ public class Pokemon {
 
     public String getPokemonUrl() {
         return pokemonUrl;
+    }
+
+    public String getPokemonId() {
+        return pokemonId;
+    }
+
+    public void setPokemonId(String pokemonId) {
+        this.pokemonId = pokemonId;
     }
 }

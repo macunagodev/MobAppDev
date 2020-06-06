@@ -59,7 +59,7 @@ public class recentsTabFragment extends Fragment implements OnPokemonClicked {
     private void fillMockData(){
         List<Pokemon> pokemonList = new ArrayList<>();
 
-        Pokemon pokemon = new Pokemon("", "Sharmander", "Pokemon de Fuego", false, "");
+        Pokemon pokemon = new Pokemon("", "Sharmander", "Pokemon de Fuego", false, "", "");
         pokemonList.add(pokemon);
 
         pokemonAdapter.setPokemonList(pokemonList);
@@ -67,9 +67,13 @@ public class recentsTabFragment extends Fragment implements OnPokemonClicked {
 
     @Override
     public void onClicked(Pokemon pokemon) {
-
         Log.d("Item clicked: ", pokemon.getPokemonName());
-        NavDirections action = MenuFragmentDirections.actionMenuFragmentToDetailFragment();
+        NavDirections action = MenuFragmentDirections.actionMenuFragmentToDetailFragment("1", "https://pokeres.bastionbot.org/images/pokemon/25.png", "Pending");
         NavHostFragment.findNavController(recentsTabFragment.this).navigate(action);
+    }
+
+    @Override
+    public void onFavoriteClick(Pokemon pokemon) {
+
     }
 }

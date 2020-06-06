@@ -1,6 +1,10 @@
 package com.example.proyectofinalpokemon.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,29 +17,15 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.example.proyectofinalpokemon.R;
 import com.example.proyectofinalpokemon.adapters.PokemonAdapter;
-import com.example.proyectofinalpokemon.api.RetrofitProvider;
 import com.example.proyectofinalpokemon.listener.OnPokemonClicked;
 import com.example.proyectofinalpokemon.models.Pokemon;
-import com.example.proyectofinalpokemon.models.PokemonListResponse;
 import com.example.proyectofinalpokemon.viewmodel.AllTabViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class allTabFragment extends Fragment implements OnPokemonClicked {
 
     private RecyclerView recyclerView;
@@ -63,7 +53,7 @@ public class allTabFragment extends Fragment implements OnPokemonClicked {
         recyclerView = view.findViewById(R.id.pokemonAllRecyclerView);
         InitRecyclerView();
         viewModel.getPokemonListFromServer(); //Llamado al servidor.
-        viewModel.getPokemonList().observe(this.getViewLifecycleOwner(), new Observer<List<Pokemon>>() { // Nos suscribmos al evento del get pokemon list.
+        viewModel.getPokemonList().observe(this.getViewLifecycleOwner(), new Observer<List<Pokemon>>() { // Nos suscribimos al evento del get pokemon list.
             @Override
             public void onChanged(List<Pokemon> pokemons) {
                 pokemonAdapter.setPokemonList(pokemons);  //Aqui recibimos la respuesta del servidor.
@@ -82,16 +72,16 @@ public class allTabFragment extends Fragment implements OnPokemonClicked {
     // Metodo que simula llamada al servidor.
     private void fillMockData(){
         List<Pokemon> pokemonList = new ArrayList<>();
-        Pokemon pokemon = new Pokemon("", "Pikachu", "Pokemon del Rayo", true, "");
+        Pokemon pokemon = new Pokemon("", "Pikachu", "Pokemon del Rayo", true, "", "");
         pokemonList.add(pokemon);
 
-        pokemon = new Pokemon("", "Metapod", "Pokemon capullo", true, "");
+        pokemon = new Pokemon("", "Metapod", "Pokemon capullo", true, "", "");
         pokemonList.add(pokemon);
 
-        pokemon = new Pokemon("", "Sharmander", "Pokemon de Fuego", false, "");
+        pokemon = new Pokemon("", "Sharmander", "Pokemon de Fuego", false, "", "");
         pokemonList.add(pokemon);
 
-        pokemon = new Pokemon("", "Giglipop", "Pokemon globo", true, "");
+        pokemon = new Pokemon("", "Giglipop", "Pokemon globo", true, "", "");
         pokemonList.add(pokemon);
 
         pokemonAdapter.setPokemonList(pokemonList);
@@ -100,7 +90,13 @@ public class allTabFragment extends Fragment implements OnPokemonClicked {
     @Override
     public void onClicked(Pokemon pokemon) {
         Log.d("Item clicked: ", pokemon.getPokemonName());
-        NavDirections action = MenuFragmentDirections.actionMenuFragmentToDetailFragment();
+        NavDirections action = MenuFragmentDirections.actionMenuFragmentToDetailFragment(pokemon.getPokemonId(), pokemon.getPokemonImage(), pokemon.getPokemonName());
         NavHostFragment.findNavController(allTabFragment.this).navigate(action);
+    }
+
+    @Override
+    public void onFavoriteClick(Pokemon pokemon) {
+        //Logica de guardar a base de datos.
+        Log.d("Favorite pokemon", "Favorite");
     }
 }

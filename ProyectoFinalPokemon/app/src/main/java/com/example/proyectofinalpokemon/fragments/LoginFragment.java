@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +23,8 @@ public class LoginFragment extends Fragment {
 
     private Button submitButton;
     private TextInputEditText trainerTextInputEditText;
+    private RadioButton rbMaleGender;
+    private RadioButton rbFemaleGender;
 
     @Nullable
     @Override
@@ -35,21 +38,44 @@ public class LoginFragment extends Fragment {
 
         BaseSharedPreferences baseSharedPreferences = new BaseSharedPreferences(requireContext());
         String trainerName;
+        String gender;
+
         submitButton = view.findViewById(R.id.btnSubmit);
+        rbMaleGender = view.findViewById(R.id.rbMasculino);
+        rbFemaleGender = view.findViewById(R.id.rbFemenino);
         trainerTextInputEditText = view.findViewById(R.id.trainerNameTextInputEditText);
         trainerName = baseSharedPreferences.getTrainerName();
+        gender = baseSharedPreferences.getGender();
 
-        if(trainerName != null){
+        if (trainerName != null){
             trainerTextInputEditText.setText(trainerName);
         } else {
             trainerTextInputEditText.setText("");
+        }
+
+        if (gender != null){
+            switch (gender){
+                case "Male":
+                    rbMaleGender.setChecked(true);
+                    break;
+                case "Female":
+                    rbFemaleGender.setChecked(true);
+                    break;
+            }
         }
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 baseSharedPreferences.setTrainerName(trainerTextInputEditText.getText().toString());
-                //NavHostFragment.findNavController(LoginFragment.this).navigate(R.id.action_loginFragment_to_menuFragment);
+                if (rbMaleGender.isChecked()){
+                    baseSharedPreferences.setGender("Male");
+                }
+
+                if (rbFemaleGender.isChecked()){
+                    baseSharedPreferences.setGender("Female");
+                }
+
                 NavDirections action = LoginFragmentDirections.actionLoginFragmentToMenuFragment("Mauricio");
                 NavHostFragment.findNavController(LoginFragment.this).navigate(action);
             }

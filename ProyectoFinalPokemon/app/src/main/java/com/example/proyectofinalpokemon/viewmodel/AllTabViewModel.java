@@ -17,17 +17,17 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AllTabViewModel extends ViewModel {
+
+    private MutableLiveData<List<Pokemon>> pokemonList = new MutableLiveData<>();
+    // string MutableLiveData errorMessage;
+
     public LiveData<List<Pokemon>> getPokemonList() {
         return pokemonList;
     }
 
-    // string MutableLiveData errorMessage;
-
-    private MutableLiveData<List<Pokemon>> pokemonList = new MutableLiveData<>();
-
     public void getPokemonListFromServer(){
         RetrofitProvider retrofitProvider = new RetrofitProvider();
-        retrofitProvider.getPokemonApiService().getPokemonList().enqueue(new Callback<PokemonListResponse>() {
+        retrofitProvider.getPokemonApiService().getPokemonList(20, 1000).enqueue(new Callback<PokemonListResponse>() {
             @Override
             public void onResponse(Call<PokemonListResponse> call, Response<PokemonListResponse> response) {
                 if (response.isSuccessful()){
