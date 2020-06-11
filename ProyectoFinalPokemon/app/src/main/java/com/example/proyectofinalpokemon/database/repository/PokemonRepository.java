@@ -35,11 +35,11 @@ public class PokemonRepository {
             });
         }
     }
-
+/*
     public LiveData<PokemonDB> FindPokemonById(String pokeId){
         return pokemonDAO.FindById(pokeId);
     }
-
+*/
     public LiveData<List<PokemonDB>> GetAllFavoritePokemonList(){
         return pokemonDAO.getAllFavoritePokemonList();
     }
