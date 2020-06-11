@@ -1,16 +1,20 @@
 package com.example.proyectofinalpokemon.adapters;
 
 import android.annotation.SuppressLint;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyectofinalpokemon.R;
 import com.example.proyectofinalpokemon.listener.OnPokemonClicked;
 import com.example.proyectofinalpokemon.models.Pokemon;
+import com.example.proyectofinalpokemon.viewmodel.DatabasePokemonViewModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -65,12 +69,15 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
         }
 
         public void Bind(final Pokemon pokemon, final OnPokemonClicked listener){
-            String[] pokeUrlParts = pokemon.getPokemonUrl().split("/");
-            pokeId = pokeUrlParts[pokeUrlParts.length-1];
-            pokemon.setPokemonId(pokeId);
+            if (pokemon.getPokemonId() == "" || pokemon.getPokemonId() == null){
+                String[] pokeUrlParts = pokemon.getPokemonUrl().split("/");
+                pokeId = pokeUrlParts[pokeUrlParts.length-1];
+                pokemon.setPokemonId(pokeId);
+            }
+
             pokemonNameTextView.setText(pokemon.getPokemonName());
             pokemonDescriptionTextView.setText(pokemon.getPokemonDescription());
-            pokemon.setPokemonImage("https://pokeres.bastionbot.org/images/pokemon/" + pokeId + ".png");
+            pokemon.setPokemonImage("https://pokeres.bastionbot.org/images/pokemon/" + pokemon.getPokemonId() + ".png");
             Picasso.get().load(pokemon.getPokemonImage()).into(pokemonNameImg);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -82,6 +89,16 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
             favoriteImg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    //Drawable doriginal = favoriteImg.getDrawable();
+                    //Drawable blackStar = Picasso.get().load(R.drawable.ic_star_black).into(favoriteImg);
+
+                    if (favoriteImg.getDrawable() == ContextCompat.getDrawable(v.getContext(), R.drawable.ic_star_border_black)){
+                        favoriteImg.setImageResource(R.drawable.ic_star_black);
+                    } else {
+                        favoriteImg.setImageResource(R.drawable.ic_star_border_black);
+                    }
+
                     listener.onFavoriteClick(pokemon);
                 }
             });

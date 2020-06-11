@@ -5,6 +5,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -19,8 +22,10 @@ import android.widget.LinearLayout;
 
 import com.example.proyectofinalpokemon.R;
 import com.example.proyectofinalpokemon.adapters.PokemonAdapter;
+import com.example.proyectofinalpokemon.database.entity.PokemonDB;
 import com.example.proyectofinalpokemon.listener.OnPokemonClicked;
 import com.example.proyectofinalpokemon.models.Pokemon;
+import com.example.proyectofinalpokemon.viewmodel.DatabasePokemonViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +37,31 @@ public class favoritesTabFragment extends Fragment implements OnPokemonClicked {
 
     private RecyclerView recyclerView;
     private PokemonAdapter pokemonAdapter = new PokemonAdapter(this);
+    private DatabasePokemonViewModel dbViewModel;
+
+    private List<Pokemon> ConvertToPokemonList(List<PokemonDB> pokemonDbList){
+        List<Pokemon> newPokemonList = new ArrayList<>();
+
+        if (pokemonDbList != null && pokemonDbList.size() > 0){
+            for (int index = 0; index < pokemonDbList.size(); index++){
+                newPokemonList.add(new Pokemon(
+                        pokemonDbList.get(index).getImage(),
+                        pokemonDbList.get(index).getName(),
+                        "",
+                        pokemonDbList.get(index).getIsFavorite(),
+                        "",
+                        pokemonDbList.get(index).getId()));
+            }
+        }
+
+        return newPokemonList;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        dbViewModel = new ViewModelProvider(this).get(DatabasePokemonViewModel.class);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,13 +77,24 @@ public class favoritesTabFragment extends Fragment implements OnPokemonClicked {
         // Inflamos el recycle view para el pokemon.
         recyclerView = view.findViewById(R.id.pokemonRecyclerView);
         InitRecyclerView();
+
+        //Leer de la base de datos los pokemones favoritos
+        dbViewModel.GetAllFavoritePokemonList().observe(getViewLifecycleOwner(), new Observer<List<PokemonDB>>() {
+            @Override
+            public void onChanged(List<PokemonDB> pokemonDBS) {
+                int count = pokemonDBS.size();
+                pokemonAdapter.setPokemonList(ConvertToPokemonList(pokemonDBS));
+            }
+        });
+        //List<Pokemon> p = ConvertToPokemonList(favoritePokemonList);
+        //pokemonAdapter.setPokemonList(p);
     }
 
     private void InitRecyclerView(){
         recyclerView.setAdapter(pokemonAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
-        fillMockData();
+        //fillMockData();
     }
 
     // Metodo que simula llamada al servidor.
@@ -71,7 +112,7 @@ public class favoritesTabFragment extends Fragment implements OnPokemonClicked {
     @Override
     public void onClicked(Pokemon pokemon) {
         Log.d("Item clicked: ", pokemon.getPokemonName());
-        NavDirections action = MenuFragmentDirections.actionMenuFragmentToDetailFragment("1", "https://pokeres.bastionbot.org/images/pokemon/25.png", "Pending");
+        NavDirections action = MenuFragmentDirections.actionMenuFragmentToDetailFragment(pokemon.getPokemonId(), pokemon.getPokemonImage(), pokemon.getPokemonName());
         NavHostFragment.findNavController(favoritesTabFragment.this).navigate(action);
     }
 

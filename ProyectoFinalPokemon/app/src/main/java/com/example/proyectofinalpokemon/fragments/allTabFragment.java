@@ -5,9 +5,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,9 +21,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyectofinalpokemon.R;
 import com.example.proyectofinalpokemon.adapters.PokemonAdapter;
+import com.example.proyectofinalpokemon.database.entity.PokemonDB;
 import com.example.proyectofinalpokemon.listener.OnPokemonClicked;
 import com.example.proyectofinalpokemon.models.Pokemon;
 import com.example.proyectofinalpokemon.viewmodel.AllTabViewModel;
+import com.example.proyectofinalpokemon.viewmodel.DatabasePokemonViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,13 +33,16 @@ import java.util.List;
 public class allTabFragment extends Fragment implements OnPokemonClicked {
 
     private RecyclerView recyclerView;
+    private ImageView favoriteImg;
     private PokemonAdapter pokemonAdapter = new PokemonAdapter(this);
     private AllTabViewModel viewModel;
+    private DatabasePokemonViewModel dbViewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(this).get(AllTabViewModel.class);
+        dbViewModel = new ViewModelProvider(this).get(DatabasePokemonViewModel.class);
     }
 
     @Override
@@ -51,6 +58,7 @@ public class allTabFragment extends Fragment implements OnPokemonClicked {
 
         // Inflamos el recycle view para el pokemon.
         recyclerView = view.findViewById(R.id.pokemonAllRecyclerView);
+        //favoriteImg = view.findViewById(R.id.imgFavorite);
         InitRecyclerView();
         viewModel.getPokemonListFromServer(); //Llamado al servidor.
         viewModel.getPokemonList().observe(this.getViewLifecycleOwner(), new Observer<List<Pokemon>>() { // Nos suscribimos al evento del get pokemon list.
@@ -59,6 +67,11 @@ public class allTabFragment extends Fragment implements OnPokemonClicked {
                 pokemonAdapter.setPokemonList(pokemons);  //Aqui recibimos la respuesta del servidor.
             }
         }); // Para indicarle al viewmodel cual va a ser el ciclo de vida asociado.
+    }
+
+    private List<Pokemon> setIsFavorite(List<Pokemon> pokemonList){
+
+        return pokemonList;
     }
 
     private void InitRecyclerView(){
@@ -98,5 +111,6 @@ public class allTabFragment extends Fragment implements OnPokemonClicked {
     public void onFavoriteClick(Pokemon pokemon) {
         //Logica de guardar a base de datos.
         Log.d("Favorite pokemon", "Favorite");
+        dbViewModel.InsertPokemon(pokemon.getPokemonId(), pokemon.getPokemonName(), pokemon.getPokemonImage(), true);
     }
 }

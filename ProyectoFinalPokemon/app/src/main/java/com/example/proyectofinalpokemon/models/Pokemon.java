@@ -37,9 +37,14 @@ public class Pokemon {
         return pokemonDescription;
     }
 
-    public Boolean getFavorite() {
+    public Boolean getIsFavorite() {
         return isFavorite;
     }
+
+    public void getIsFavorite(Boolean isFavorite) {
+        this.isFavorite = isFavorite;
+    }
+
 
     public String getPokemonUrl() {
         return pokemonUrl;

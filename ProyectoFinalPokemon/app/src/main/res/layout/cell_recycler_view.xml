@@ -59,7 +59,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/btn_star"
-        android:contentDescription="@string/ToDo" />
+        app:srcCompat="@drawable/ic_star_border_black"
+        android:contentDescription="@string/ToDo"
+        tools:ignore="VectorDrawableCompat" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
